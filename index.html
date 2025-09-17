@@ -1,55 +1,39 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <title>Soil Suitability Checker</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Soil Suitable for Plant Growth</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f9f4;
+            margin: 20px;
+            padding: 20px;
+        }
+        h1 {
+            color: #2e7d32;
+        }
+        ul {
+            background-color: #e8f5e9;
+            padding: 15px;
+            border-radius: 8px;
+            max-width: 400px;
+        }
+        li {
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+    </style>
 </head>
 <body>
-  <h1>🌱 Soil Suitability Checker</h1>
-  <form id="soilForm">
-    <label>pH Level: <input type="number" step="0.1" id="ph"></label><br>
-    <label>Soil Type:
-      <select id="soilType">
-        <option>Clay</option>
-        <option>Loam</option>
-        <option>Sandy</option>
-        <option>Sandy Loam</option>
-      </select>
-    </label><br>
-    <label>Nitrogen (ppm): <input type="number" id="n"></label><br>
-    <label>Phosphorus (ppm): <input type="number" id="p"></label><br>
-    <label>Potassium (ppm): <input type="number" id="k"></label><br>
-    <label>Choose Plant:
-      <select id="plant">
-        <option value="tomato">Tomato</option>
-        <option value="carrot">Carrot</option>
-        <option value="lettuce">Lettuce</option>
-      </select>
-    </label><br>
-    <button type="submit">Check Suitability</button>
-  </form>
-
-  <div id="result"></div>
-
-  <script>
-    document.getElementById("soilForm").addEventListener("submit", async function(e) {
-      e.preventDefault();
-      const data = {
-        ph: parseFloat(document.getElementById("ph").value),
-        soilType: document.getElementById("soilType").value,
-        n: parseInt(document.getElementById("n").value),
-        p: parseInt(document.getElementById("p").value),
-        k: parseInt(document.getElementById("k").value),
-        plant: document.getElementById("plant").value
-      };
-
-      const res = await fetch("/check", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data)
-      });
-
-      const result = await res.json();
-      document.getElementById("result").innerText = result.message;
-    });
-  </script>
+    <h1>Soil Suitable for Plant Growth</h1>
+    <ul>
+        <li><strong>Texture:</strong> Loamy (balanced sand, silt, and clay)</li>
+        <li><strong>pH Level:</strong> Between 6.0 and 7.5 (slightly acidic to neutral)</li>
+        <li><strong>Moisture:</strong> Well-drained but moist soil</li>
+        <li><strong>Organic Matter:</strong> Rich in organic materials like compost</li>
+        <li><strong>Good Aeration:</strong> Soil should allow roots to breathe</li>
+    </ul>
 </body>
 </html>
