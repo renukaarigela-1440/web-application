@@ -3,52 +3,120 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Soil Suitable for Plant Growth</title>
+    <title>Soil Identification and Plant Recommendations</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f9f4;
             margin: 20px;
             padding: 20px;
+            max-width: 600px;
         }
         h1, h2 {
             color: #2e7d32;
         }
-        ul {
+        label, select, button {
+            font-size: 1.1em;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            display: block;
+        }
+        .result {
             background-color: #e8f5e9;
             padding: 15px;
             border-radius: 8px;
-            max-width: 400px;
-            list-style-type: disc;
-            margin-bottom: 20px;
-        }
-        li {
-            margin-bottom: 8px;
             font-size: 1.1em;
+        }
+        ul {
+            margin-top: 10px;
+            list-style-type: disc;
+            padding-left: 20px;
         }
     </style>
 </head>
 <body>
-    <h1>Soil Suitable for Plant Growth</h1>
-    <ul>
-        <li><strong>Texture:</strong> Loamy (balanced sand, silt, and clay)</li>
-        <li><strong>pH Level:</strong> Between 6.0 and 7.5 (slightly acidic to neutral)</li>
-        <li><strong>Moisture:</strong> Well-drained but moist soil</li>
-        <li><strong>Organic Matter:</strong> Rich in organic materials like compost</li>
-        <li><strong>Good Aeration:</strong> Soil should allow roots to breathe</li>
-    </ul>
+    <h1>Soil Identification & Plant Recommendations</h1>
 
-    <h2>Suitable Crops for This Soil</h2>
-    <ul>
-        <li>Wheat</li>
-        <li>Rice</li>
-        <li>Corn (Maize)</li>
-        <li>Soybeans</li>
-        <li>Tomatoes</li>
-        <li>Carrots</li>
-        <li>Potatoes</li>
-        <li>Beans</li>
-        <li>Peppers</li>
-    </ul>
+    <label for="soilType">Select Soil Type:</label>
+    <select id="soilType">
+        <option value="">--Choose Soil Type--</option>
+        <option value="loamy">Loamy</option>
+        <option value="sandy">Sandy</option>
+        <option value="clayey">Clayey</option>
+        <option value="silty">Silty</option>
+        <option value="peaty">Peaty</option>
+        <option value="chalky">Chalky</option>
+    </select>
+
+    <button onclick="checkSoil()">Check Soil Suitability</button>
+
+    <div id="result" class="result" style="display:none;"></div>
+
+    <script>
+        const soilData = {
+            loamy: {
+                suitable: true,
+                description: "Loamy soil is ideal for plant growth as it retains moisture, drains well, and is rich in nutrients.",
+                plants: ["Wheat", "Rice", "Corn (Maize)", "Soybeans", "Tomatoes", "Carrots", "Potatoes", "Beans", "Peppers"]
+            },
+            sandy: {
+                suitable: false,
+                description: "Sandy soil drains quickly and does not hold nutrients well, making it less suitable for many plants unless amended.",
+                plants: ["Watermelon", "Peanuts", "Cactus", "Lavender"]
+            },
+            clayey: {
+                suitable: false,
+                description: "Clayey soil holds water but drains poorly and can be compact, which may restrict root growth.",
+                plants: ["Broccoli", "Cabbage", "Cauliflower", "Rice"]
+            },
+            silty: {
+                suitable: true,
+                description: "Silty soil is fertile and retains moisture well but can become compacted.",
+                plants: ["Corn (Maize)", "Soybeans", "Rice", "Wheat"]
+            },
+            peaty: {
+                suitable: false,
+                description: "Peaty soil is acidic and high in organic matter but can be too wet for many plants.",
+                plants: ["Heather", "Blueberries", "Cranberries"]
+            },
+            chalky: {
+                suitable: false,
+                description: "Chalky soil is alkaline and can limit the availability of some nutrients.",
+                plants: ["Beets", "Cabbage", "Spinach", "Barley"]
+            }
+        };
+
+        function checkSoil() {
+            const select = document.getElementById("soilType");
+            const soilType = select.value;
+            const resultDiv = document.getElementById("result");
+
+            if (!soilType) {
+                resultDiv.style.display = "none";
+                alert("Please select a soil type.");
+                return;
+            }
+
+            const soilInfo = soilData[soilType];
+
+            let html = `<h2>Soil Type: ${soilType.charAt(0).toUpperCase() + soilType.slice(1)}</h2>`;
+            html += `<p>${soilInfo.description}</p>`;
+
+            if (soilInfo.suitable) {
+                html += `<p><strong>This soil is suitable for planting.</strong></p>`;
+            } else {
+                html += `<p><strong>This soil is less suitable for planting without amendments.</strong></p>`;
+            }
+
+            html += `<h3>Recommended Plants:</h3><ul>`;
+            soilInfo.plants.forEach(plant => {
+                html += `<li>${plant}</li>`;
+            });
+            html += `</ul>`;
+
+            resultDiv.innerHTML = html;
+            resultDiv.style.display = "block";
+        }
+    </script>
 </body>
 </html>
